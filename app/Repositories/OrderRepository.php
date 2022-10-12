@@ -19,4 +19,11 @@ class OrderRepository extends BaseRepository
             ->where('created_at', '>=', now()->copy()->subMinutes(5))
             ->count();
     }
+
+    public function findOrderByOrderId($orderId)
+    {
+        return $this->model
+            ->where('order_id', $orderId)
+            ->first();
+    }
 }

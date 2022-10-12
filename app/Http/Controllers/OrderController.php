@@ -14,7 +14,9 @@ class OrderController extends Controller
     public function __construct(OrderProcessorService $orderProcessorService)
     {
         $this->orderProcessorService = $orderProcessorService;
-    }    /**
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response

@@ -20,12 +20,13 @@ class OrderProcessorService
     }
 
     //把題目的業務邏輯移service層,DB相關操作統整到repository
-    public function process($orderId)
+    public function process($orderId): array
     {
         try {
             DB::beginTransaction();
 
-            $order = $this->orderRepository->find($orderId);
+            $order = $this->orderRepository->findOrderByOrderId($orderId);
+
             $accountID = $order->account->id;
             $orderAmount = $order->amount;
 
@@ -35,6 +36,7 @@ class OrderProcessorService
                 throw new Exception('Duplicate order likely.');
             }
 
+            //此處由於題目沒有列出BillerInterface的code 故單純當作一段業務邏輯,不加以改動
             $this->biller->bill(
                 $accountID,
                 $orderAmount
